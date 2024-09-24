@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "../components/manu/Nav";
 import SideBar from "../components/manu/Sidebar";
+import EditForm from "../components/Edit/EditForm";
 
 const ClassCreate: React.FC = () => {
    
@@ -19,7 +20,7 @@ const ClassCreate: React.FC = () => {
                 <div className="flex flex-wrap justify-center">
                     <div className=" mt-5 w-[1500px] h-[1000px] rounded-3xl overflow-auto scrollable-div flex justify-center bg-sidebar backdrop-blur-sm">
                         <div className="flex flex-row items-start m-8 text-secondary ">
-                             
+                             < EditForm />
                         </div>
                     </div>
                 </div>

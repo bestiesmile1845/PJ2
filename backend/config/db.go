@@ -7,6 +7,7 @@ import (
 	"example.com/pj2/entity"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"time"
 )
 
 var db *gorm.DB
@@ -30,6 +31,11 @@ func SetupDatabase() {
 		&entity.Member{},
 		&entity.Genders{},
 		&entity.Admin{},
+		&entity.ClassType{},
+		&entity.Trainer{},
+		&entity.Class{},
+		&entity.Booking{},
+
 	)
 	if err != nil {
 		fmt.Printf("Error during AutoMigrate: %v\n", err)
@@ -80,5 +86,33 @@ func SetupDatabase() {
 		Password:  hashedPassword1,
 		GenderID:  1,
 	}
+	TrainerJib := entity.Trainer{Name: "Jib"}
+	TrainerAdam := entity.Trainer{Name: "Adam"}
+
+	db.FirstOrCreate(&TrainerJib, &entity.Trainer{Name: "Jib"})
+	db.FirstOrCreate(&TrainerAdam, &entity.Trainer{Name: "Adam"})
+
+	ClassTypeCardio := entity.ClassType{Name: "Cardio"}
+	ClassTypeCycling := entity.ClassType{Name: "Cycling"}
+
+	db.FirstOrCreate(&ClassTypeCardio, &entity.ClassType{Name: "Cardio"})
+	db.FirstOrCreate(&ClassTypeCycling, &entity.ClassType{Name: "Cycling"})
+
 	db.FirstOrCreate(admin, entity.Admin{Email: "admin@gmail.com"})
+	StartDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
+	EndDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
+	Class := &entity.Class{
+		ClassName: "Hatha Yoga",
+		Deets:  "Introduction to yoga for strength & flexibility",
+		StartDate: StartDate,
+		EndDate:  EndDate,
+		TrainerID: 1,
+		ClassPic: "aa",
+		ParticNum: 30,
+		ClassTypeID: 1,
+		AdminID: 1,
+	}
+	db.FirstOrCreate(Class, &entity.Class{
+        ClassName: "Hatha Yoga",
+    })
 }

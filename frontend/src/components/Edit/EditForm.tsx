@@ -31,7 +31,7 @@ const CreateForm: React.FC = () => {
 
     return (
             <div className="text-2xl">
-                <h2 className="text-green-300 text-4xl mb-8 text-center ">Create Member</h2>
+                <h2 className="text-green-300 text-4xl mb-8 text-center ">Edit Member</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-2 gap-6">
                         {/* First Name */}
@@ -193,10 +193,16 @@ const CreateForm: React.FC = () => {
                     {/* Buttons */}
                     <div className="flex justify-end space-x-4 mt-8">
                         <button
+                            type="button"
+                            className="bg-red-600 text-white py-2 px-6 rounded-lg focus:outline-none hover:bg-black"
+                        >
+                            Delete
+                        </button>
+                        <button
                             type="submit"
                             className="bg-hover text-black py-2 px-6 rounded-lg focus:outline-none hover:!bg-green"
                         >
-                            Sign up!
+                            Update
                         </button>
                     </div>
                 </form>
