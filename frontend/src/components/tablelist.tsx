@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GetMembers } from "../service/https";
+import { GetMembers } from "../service/https/member";
 import {MembersInterface }from "../interface/IMembers";
 import { Link } from 'react-router-dom';
 const TableList: React.FC = () => {
@@ -18,7 +18,7 @@ const TableList: React.FC = () => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-[1800px] text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="w-[1600px] text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-black uppercase bg-gray-50 dark:bg-green dark:text-black">
           <tr>
             <th scope="col" className="px-6 py-3">Name</th>

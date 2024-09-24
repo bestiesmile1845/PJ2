@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MembersInterface } from "../../interface/IMembers"; // นำเข้า interface
-import { CreateMember } from "../../service/https";
+import { CreateMember } from "../../service/https/member";
 
 const Stepper: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);

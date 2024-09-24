@@ -5,8 +5,8 @@ import SideBar from "../../../../components/admin/class/SideBar";
 import Navbar from "../../../../components/admin/class/Navbar";
 import { GrAddCircle } from "react-icons/gr";
 import toast, { Toaster } from "react-hot-toast";
-import { ClassTypesInterface } from "../../../../interfaces/IClassType";
-import { GetClassTypes, DeleteClassTypesByID } from "../../../../services/https/class/classType";
+import { ClassTypesInterface } from "../../../../interface/IClassType";
+import { GetClassTypes, DeleteClassTypesByID } from "../../../../service/https/class/classType";
 
 // Utility for modal management
 const useModal = () => {

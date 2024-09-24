@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Input from "../Input";
 import toast from "react-hot-toast";
-import { ClassTypesInterface } from "../../../../interfaces/IClassType";
-import { CreateClassType, UpdateClassType } from "../../../../services/https/class/classType";
+import { ClassTypesInterface } from "../../../../interface/IClassType";
+import { CreateClassType, UpdateClassType } from "../../../../service/https/class/classType";
 
 interface ModalProps {
     isOpen: boolean;

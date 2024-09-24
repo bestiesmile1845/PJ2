@@ -3,8 +3,8 @@ import "../../../../App.css";
 import SideBar from "../../../../components/admin/class/SideBar";
 import Navbar from "../../../../components/admin/class/Navbar";
 import Modal from "../../../../components/admin/class/Trainer/Modal";
-import { TrainersInterface } from "../../../../interfaces/ITrainer";
-import { GetTrainers, DeleteTrainerByID, UpdateTrainer, CreateTrainer } from "../../../../services/https/class/trainer";
+import { TrainersInterface } from "../../../../interface/ITrainer";
+import { GetTrainers, DeleteTrainerByID, UpdateTrainer, CreateTrainer } from "../../../../service/https/class/trainer";
 import { GrAddCircle } from "react-icons/gr";
 import toast, { Toaster } from "react-hot-toast";
 

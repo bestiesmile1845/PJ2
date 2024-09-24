@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-import { GetClasses } from "../../services/https/class";
+import { GetClasses } from "../../service/https/class";
 
 interface Class {
     ID: number;

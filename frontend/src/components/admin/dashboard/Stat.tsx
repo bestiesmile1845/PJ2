@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { SiGoogleclassroom, SiStaffbase } from "react-icons/si";
 import { IoIosFitness } from "react-icons/io";
-import { CountClasses, CountMembers, CountStaffs } from "../../../services/https";
+import { CountClasses, CountMembers, CountStaffs } from "../../../service/https";
 
 // StatCard component
 interface StatCardProps {

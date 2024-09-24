@@ -20,7 +20,19 @@ export default {
           dropZone: "#C4C4C4",
           success: "#4caf50",
           error: "#f44336",
-          password:"#1E1E1E"
+          password:"#1E1E1E",
+          green1: "#D9EDAC", //secondary
+          green2: "#C9FE59", //use
+          green3: "#C9FE54", //green
+          green4: "#96B84B",//iconUser
+          green5: "#8BC804",//hover
+          green6: "#4caf50",//success
+          red:"#f44336",//error
+          gray1: "#C4C4C4",//dropZone
+          gray2: "#B3B3B3",//third
+          gray3: "#383838",//createBTN
+          gray4: "#242424",//sidebar
+          gray5: "#1E1E1E",//loginInput
       },
       screens: {
         'tablet': '640px',

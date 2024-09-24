@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetMemberById } from "../../../services/https/member";
-import { GetAdminById } from "../../../services/https/admin"; 
+import { GetMemberById } from "../../../service/https/member";
+import { GetAdminById } from "../../../service/https/admin"; 
 
 interface NavbarProps {
     title: string;

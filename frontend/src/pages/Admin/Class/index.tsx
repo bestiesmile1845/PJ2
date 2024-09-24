@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GrAddCircle } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
-import { GetClasses, DeleteClassByID } from "../../../services/https/class";
+import { GetClasses, DeleteClassByID } from "../../../service/https/class";
 import SideBar from "../../../components/admin/class/SideBar";
 import Navbar from "../../../components/admin/class/Navbar";
 import { MdEdit, MdDeleteForever } from "react-icons/md";

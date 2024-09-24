@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 // import Input from "../../../../components/admin/class/Input";
-import { TrainersInterface } from "../../../../interfaces/ITrainer";
-import { CreateTrainer, UpdateTrainer } from "../../../../services/https/class/trainer";
+import { TrainersInterface } from "../../../../interface/ITrainer";
+import { CreateTrainer, UpdateTrainer } from "../../../../service/https/class/trainer";
 import TrainerForm from "./TrainerForm";
 
 interface ModalProps {

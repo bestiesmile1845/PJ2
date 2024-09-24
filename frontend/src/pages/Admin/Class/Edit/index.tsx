@@ -6,12 +6,12 @@ import Dropzone from "../../../../components/admin/class/Dropzone";
 import Form from "../../../../components/admin/class/EditClass/Form";
 import Modal from "../../../../components/admin/class/EditClass/Modal";
 import { FaRegSave } from "react-icons/fa";
-import { GetTrainers } from "../../../../services/https/class/trainer";
-import { GetClassTypes } from "../../../../services/https/class/classType";
-import { UpdateClass, GetClassById } from "../../../../services/https/class";
-import { TrainersInterface } from "../../../../interfaces/ITrainer";
-import { ClassTypesInterface } from "../../../../interfaces/IClassType";
-import { ClassesInterface } from "../../../../interfaces/IClass";
+import { GetTrainers } from "../../../../service/https/class/trainer";
+import { GetClassTypes } from "../../../../service/https/class/classType";
+import { UpdateClass, GetClassById } from "../../../../service/https/class";
+import { TrainersInterface } from "../../../../interface/ITrainer";
+import { ClassTypesInterface } from "../../../../interface/IClassType";
+import { ClassesInterface } from "../../../../interface/IClass";
 import toast, { Toaster } from "react-hot-toast";
 import imageCompression from "browser-image-compression";
 

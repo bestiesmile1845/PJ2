@@ -23,7 +23,7 @@ const SideBar: React.FC = () => {
 
     const Menus: MenuItem[] = [
         { title: "Dashboard", icon: <MdOutlineSpaceDashboard />, link: "/dashboard" },
-        { title: "Members", icon: <LuUsers /> },
+        { title: "Members", icon: <LuUsers />, link:"/listmember" },
         {
             title: "Class",
             icon: <FaRegClock />,
