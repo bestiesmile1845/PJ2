@@ -22,7 +22,7 @@ func CreateAdmin(c *gin.Context) {
 	db := config.DB()
 
 	// ค้นหา gender ด้วย id
-	var gender entity.Gender
+	var gender entity.Genders
 	db.First(&gender, admin.GenderID)
 	if gender.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"error": "gender not found"})
@@ -35,7 +35,7 @@ func CreateAdmin(c *gin.Context) {
 
 	// สร้าง User
 	a := entity.Admin{
-		Username: admin.Username,
+		UserName: admin.UserName,
 		Password:  hashedPasswordAd,
 		Email:     admin.Email,
         FirstName: admin.FirstName,

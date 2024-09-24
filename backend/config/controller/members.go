@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"backend/config"
-	"backend/entity"
+	"example.com/pj2/config"
+	"example.com/pj2/entity"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +23,7 @@ func CreateMember(c *gin.Context) {
 
 
 	// ค้นหา gender ด้วย id
-	var gender entity.Gender
+	var gender entity.Genders
 	db.First(&gender, member.GenderID)
 	if gender.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"error": "gender not found"})
@@ -36,7 +36,7 @@ func CreateMember(c *gin.Context) {
 
 	// สร้าง Member
 	m := entity.Member{
-		Username: member.Username,
+		UserName: member.UserName,
 		Password:  hashedPassword,
 		Email:     member.Email,
         FirstName: member.FirstName,
