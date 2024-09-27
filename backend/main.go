@@ -22,6 +22,7 @@ func main() {
 
 	r.Use(CORSMiddleware())
 
+	r.POST("/login", controller.SignIn)
 	router := r.Group("")
 	{
 
@@ -31,15 +32,14 @@ func main() {
 		router.POST("/members", controller.CreateMember)
 		router.PATCH("/members", controller.UpdateMember)
 		router.DELETE("/members/:id", controller.DeleteMember)
-		// router.GET("/members/:username",controller.GetUsername)
-		// router.GET("/members/:password",controller.GetPassword)
 
 		// Gender Routes
 		router.GET("/genders", controller.ListGenders)
+
 		// Admin Routers
 		router.GET("/admins", controller.ListAdmins)
 		router.GET("/admin/:id", controller.GetAdmin)
-		router.POST("/admins", controller.CreateAdmin)
+		router.POST("/Createadmin", controller.CreateAdmin)
 		router.PATCH("/admins", controller.UpdateAdmin)
 		router.DELETE("/admins/:id", controller.DeleteAdmin)
 	}

@@ -55,7 +55,7 @@ func SignIn(c *gin.Context) {
 			ExpirationHours: 24,
 		}
 
-		signedToken, err := jwtWrapper.GenerateToken(member.UserName)
+		signedToken, err := jwtWrapper.GenerateToken(member.Username)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
 			return
@@ -80,7 +80,7 @@ func SignIn(c *gin.Context) {
 			ExpirationHours: 24,
 		}
 
-		signedToken, err := jwtWrapper.GenerateToken(admin.UserName)
+		signedToken, err := jwtWrapper.GenerateToken(admin.Username)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
 			return

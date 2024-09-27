@@ -21,7 +21,7 @@ const TableList: React.FC = () => {
       <table className="w-[1600px] text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-black uppercase bg-gray-50 dark:bg-green dark:text-black">
           <tr>
-            <th scope="col" className="px-6 py-3">Name</th>
+            <th scope="col" className="px-6 py-3">First name</th>
             <th scope="col" className="px-6 py-3">Username</th>
             <th scope="col" className="px-6 py-3">TypeMember</th>
             <th scope="col" className="px-6 py-3">SuspensionStatus</th>
@@ -36,9 +36,9 @@ const TableList: React.FC = () => {
                 className="odd:bg-white odd:dark:bg-createBTN even:bg-gray-50 even:dark:bg-sidebar border-b dark:border-white"
               >
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {members.FirstName}
+                  {members.Firstname}
                 </th>
-                <td className="px-6 py-4">{members.UserName}</td>
+                <td className="px-6 py-4">{members.Username}</td>
                 <td className="px-6 py-4">{members.TypeMember}</td>
                 <td className="px-6 py-4">{members.SuspensionStatus}</td>
                 <td className="px-6 py-4">

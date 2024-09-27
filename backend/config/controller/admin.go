@@ -35,11 +35,11 @@ func CreateAdmin(c *gin.Context) {
 
 	// สร้าง User
 	a := entity.Admin{
-		UserName: admin.UserName,
+		Username: admin.Username,
 		Password:  hashedPasswordAd,
 		Email:     admin.Email,
-        FirstName: admin.FirstName,
-        LastName:  admin.LastName,
+        Firstname: admin.Firstname,
+        Lastname:  admin.Lastname,
 		GenderID:  admin.GenderID,
 		Gender:    gender,  //โยงความสัมพันธ์กับ Entity Gender
         

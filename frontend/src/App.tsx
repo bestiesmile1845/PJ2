@@ -3,9 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import  ListMember from './pages/ListMember';
-import EditMember from './pages/EditMember';
-import  CreateMember  from './pages/CreateMember';
+import  ListMember from './pages/Member/ListMember';
+import EditMember from './pages/Member/EditMember';
+import  CreateMember  from './pages/Admin/Create/CreateAdmin';
 import Home from './pages/User/Home';
 import Package from './pages/User/Package';
 import Payment from './pages/User/Payment';
@@ -15,6 +15,8 @@ import Class from './pages/Admin/Class';
 import ClassType from './pages/Admin/Class/ClassType';
 import EditClass from './pages/Admin/Class/Edit';
 import Trainer from './pages/Admin/Class/Trainer';
+import ListAdmin from './pages/Admin/List/ListAdmin';
+import CreateAdmin from './pages/Admin/Create/CreateAdmin';
 function App() {
   return (
     
@@ -34,6 +36,8 @@ function App() {
         <Route path="/class/edit/:classID" element={<EditClass />} />
         <Route path="/class/classType" element={<ClassType />} />
         <Route path="/class/trainer" element={<Trainer />} />
+        <Route path="/ListAdmin" element={<ListAdmin />} />
+        <Route path="/CreateAdmin" element={<CreateAdmin />} />
       </Routes>
   );
 }

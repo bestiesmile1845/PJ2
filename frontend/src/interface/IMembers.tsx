@@ -1,10 +1,10 @@
 export interface MembersInterface {
     ID?: number;
-    FirstName?: string;
-    LastName?: string;
+    Firstname?: string;
+    Lastname?: string;
     Email?: string;
-    UserName?: string;
-    PhoneNumber?: string;
+    Username?: string;
+    Phonenumber?: string;
     GenderID?: number;
     Password?: string;
     Age?: string;

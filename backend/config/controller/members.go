@@ -36,13 +36,18 @@ func CreateMember(c *gin.Context) {
 
 	// สร้าง Member
 	m := entity.Member{
-		UserName: member.UserName,
+		Firstname: member.Firstname, // ตั้งค่าฟิลด์ FirstName
+		Lastname:  member.Lastname,  // ตั้งค่าฟิลด์ LastName
+		Email:     member.Email,     // ตั้งค่าฟิลด์ Email
 		Password:  hashedPassword,
-		Email:     member.Email,
-        FirstName: member.FirstName,
-        LastName:  member.LastName,
-        GenderID:  member.GenderID,
-		Gender:    gender,  //โยงความสัมพันธ์กับ Entity Gender
+		Username: member.Username,
+		Phonenumber: member.Phonenumber,
+		GenderID:  member.GenderID,
+		Gender:    gender, // โยงความสัมพันธ์กับ Entity Gender
+		Age: member.Age,
+		TypeMember:member.TypeMember,
+		PaymentStatus:member.PaymentStatus,
+		SuspensionStatus:member.SuspensionStatus,  //โยงความสัมพันธ์กับ Entity Gender
 	}
 
 	// บันทึก

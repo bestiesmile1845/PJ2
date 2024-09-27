@@ -5,11 +5,11 @@ import { CreateMember } from "../../service/https/member";
 const Stepper: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState<MembersInterface>({
-        FirstName: "",
-        LastName: "",
+        Firstname: "",
+        Lastname: "",
         Email: "",
-        UserName: "",
-        PhoneNumber: "",
+        Username: "",
+        Phonenumber: "",
         GenderID: undefined,
         Password: "",
         Age: undefined,
@@ -32,11 +32,11 @@ const Stepper: React.FC = () => {
     const validateStep = () => {
         switch (currentStep) {
             case 1:
-                return formData.FirstName && formData.LastName && formData.GenderID && formData.Age;
+                return formData.Firstname && formData.Lastname && formData.GenderID && formData.Age;
             case 2:
-                return formData.PhoneNumber && formData.Email;
+                return formData.Phonenumber && formData.Email;
             case 3:
-                return formData.UserName && formData.Password;
+                return formData.Username && formData.Password;
             default:
                 return false;
         }
@@ -80,8 +80,8 @@ const Stepper: React.FC = () => {
                                 autoComplete="Firstname"
                                 className="block w-full rounded-full text-center bg-password py-3 text-white shadow-sm"
                                 placeholder="Enter firstname"
-                                value={formData.FirstName}
-                                onChange={(e) => handleInputChange(e, "FirstName")}
+                                value={formData.Firstname}
+                                onChange={(e) => handleInputChange(e, "Firstname")}
                             />
                         </div>
                         <div className="mt-2">
@@ -94,8 +94,8 @@ const Stepper: React.FC = () => {
                                 autoComplete="Lastname"
                                 className="block w-full rounded-full text-center bg-password py-3 text-white shadow-sm"
                                 placeholder="Enter lastname"
-                                value={formData.LastName}
-                                onChange={(e) => handleInputChange(e, "LastName")}
+                                value={formData.Lastname}
+                                onChange={(e) => handleInputChange(e, "Lastname")}
                             />
                         </div>
                         
@@ -141,8 +141,8 @@ const Stepper: React.FC = () => {
                                 autoComplete="PhoneNumber"
                                 className="block w-full rounded-full text-center bg-password py-3 text-white shadow-sm"
                                 placeholder="Enter Phone Number"
-                                value={formData.PhoneNumber}
-                                onChange={(e) => handleInputChange(e, "PhoneNumber")}
+                                value={formData.Phonenumber}
+                                onChange={(e) => handleInputChange(e, "Phonenumber")}
                             />
                         </div>
                         <div className="mt-2">
@@ -174,8 +174,8 @@ const Stepper: React.FC = () => {
                                 autoComplete="Username"
                                 className="block w-full rounded-full text-center bg-password py-3 text-white shadow-sm"
                                 placeholder="Enter username"
-                                value={formData.UserName}
-                                onChange={(e) => handleInputChange(e, "UserName")}
+                                value={formData.Username}
+                                onChange={(e) => handleInputChange(e, "Username")}
                             />
                         </div>
                         <div className="mt-2">

@@ -1,13 +1,12 @@
-
-
 package config
 
 import (
 	"fmt"
+	"time"
+
 	"example.com/pj2/entity"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"time"
 )
 
 var db *gorm.DB
@@ -35,7 +34,6 @@ func SetupDatabase() {
 		&entity.Trainer{},
 		&entity.Class{},
 		&entity.Booking{},
-
 	)
 	if err != nil {
 		fmt.Printf("Error during AutoMigrate: %v\n", err)
@@ -66,23 +64,23 @@ func SetupDatabase() {
 
 	// Create member if not exists
 	member := &entity.Member{
-		FirstName: "smile",
-		LastName:  "member",
-		Email:     "member@gmail.com",
-		UserName:  "member1",
-		Password:  hashedPassword,
-		GenderID:  1,
-		PhoneNumber: "0655765586",
-		Age: "20",
+		Firstname:   "smile",
+		Lastname:    "member",
+		Email:       "member@gmail.com",
+		Username:    "member1",
+		Password:    hashedPassword,
+		GenderID:    1,
+		Phonenumber: "0655765586",
+		Age:         "20",
 	}
 	db.FirstOrCreate(member, entity.Member{Email: "admin@gmail.com"})
 
 	// Create admin if not exists
 	admin := &entity.Admin{
-		FirstName: "admin",
-		LastName:  "smile",
+		Firstname: "admin",
+		Lastname:  "smile",
 		Email:     "admin@gmail.com",
-		UserName:  "admin1",
+		Username:  "admin1",
 		Password:  hashedPassword1,
 		GenderID:  1,
 	}
@@ -102,17 +100,17 @@ func SetupDatabase() {
 	StartDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
 	EndDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
 	Class := &entity.Class{
-		ClassName: "Hatha Yoga",
-		Deets:  "Introduction to yoga for strength & flexibility",
-		StartDate: StartDate,
-		EndDate:  EndDate,
-		TrainerID: 1,
-		ClassPic: "aa",
-		ParticNum: 30,
+		ClassName:   "Hatha Yoga",
+		Deets:       "Introduction to yoga for strength & flexibility",
+		StartDate:   StartDate,
+		EndDate:     EndDate,
+		TrainerID:   1,
+		ClassPic:    "aa",
+		ParticNum:   30,
 		ClassTypeID: 1,
-		AdminID: 1,
+		AdminID:     1,
 	}
 	db.FirstOrCreate(Class, &entity.Class{
-        ClassName: "Hatha Yoga",
-    })
+		ClassName: "Hatha Yoga",
+	})
 }

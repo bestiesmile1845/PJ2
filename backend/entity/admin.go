@@ -8,10 +8,10 @@ import (
 type Admin struct {
 
 	gorm.Model
-	FirstName string    
-	LastName  string    
+	Firstname string    
+	Lastname  string    
 	Email     string    
-	UserName string 
+	Username string 
 	Password  string    
 	GenderID  uint 
 	Gender    Genders  `gorm:"foreignKey: gender_id" json:"gender"`

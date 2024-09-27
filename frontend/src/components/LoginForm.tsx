@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignInInterface } from "../interface/ISignIn";
-import { SignIn } from "../service/https/index"; // Import your SignIn function
+import { SignIn } from "../service/https"; // Import your SignIn function
 import toast, { Toaster } from "react-hot-toast"; // Import toast functions
-
 
 const LoginForm: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    
     const navigate = useNavigate(); // ใช้สำหรับการนำทาง
 
     const handleSignIn = async () => {
         const signInData: SignInInterface = {
             username,
             password,
-            
         };
 
         try {
@@ -31,7 +28,7 @@ const LoginForm: React.FC = () => {
                 if (result.role === "admin") {
                     setTimeout(() => navigate("/dashboard"), 600); // Delay navigation
                 } else if (result.role === "member") {
-                    setTimeout(() => navigate("/home"), 600); // Delay navigation
+                    setTimeout(() => navigate("/dashboard"), 600); // Delay navigation
                 }
             } else {
                 // Handle case where result doesn't have the expected fields

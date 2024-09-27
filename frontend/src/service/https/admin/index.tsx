@@ -1,6 +1,6 @@
-import { AdminsInterface } from "../../../interfaces/IAdmin";
+import { AdminsInterface } from "../../../interface/IAdmin";
 
-const apiUrl = "http://localhost:3036";
+const apiUrl = "http://localhost:8000";
 
 // Helper function for handling fetch requests
 const fetchData = async (url: string, options: RequestInit) => {
@@ -46,7 +46,7 @@ async function CreateAdmin(data: AdminsInterface) {
         body: JSON.stringify(data),
     };
 
-    return await fetchData(`${apiUrl}/admins`, requestOptions);
+    return await fetchData(`${apiUrl}/Createadmin`, requestOptions);
 }
 
 async function UpdateAdmin(data: AdminsInterface) {
