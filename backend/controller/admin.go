@@ -54,7 +54,7 @@ func CreateAdmin(c *gin.Context) {
 // GET /admin/:id
 func GetAdmin(c *gin.Context) {
 	ID := c.Param("id")
-	var admin entity.Member
+	var admin entity.Admin
 
 	db := config.DB()
 	results := db.Preload("Gender").First(&admin, ID)
@@ -69,7 +69,7 @@ func GetAdmin(c *gin.Context) {
 	c.JSON(http.StatusOK, admin)
 }
 
-// GET /users
+// GET /admins
 func ListAdmins(c *gin.Context) {
 
 	var admins []entity.Admin
@@ -83,12 +83,12 @@ func ListAdmins(c *gin.Context) {
 	c.JSON(http.StatusOK, admins)
 }
 
-// DELETE /users/:id
+// DELETE /admins/:id
 func DeleteAdmin(c *gin.Context) {
 
 	id := c.Param("id")
 	db := config.DB()
-	if tx := db.Exec("DELETE FROM users WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := db.Exec("DELETE FROM admins WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "id not found"})
 		return
 	}
@@ -96,9 +96,9 @@ func DeleteAdmin(c *gin.Context) {
 
 }
 
-// PATCH /users
+// PATCH /admins
 func UpdateAdmin(c *gin.Context) {
-	var admin entity.Member
+	var admin entity.Admin
 
 	AdminID := c.Param("id")
 
@@ -122,3 +122,4 @@ func UpdateAdmin(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Updated successful"})
 }
+

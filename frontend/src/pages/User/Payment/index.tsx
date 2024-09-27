@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import PaymentMethod from "../../../components/payment/PaymentMethod";
-import PackageDetails from "../../../components/payment/PaymentDetails";
+import PackageDetails from "../../../components/payment/PackageDetails";
 import PaymentSuccess from "../../../components/payment/PaymentSuccess";
 import myImage from "../../../assets/bg.jpg";
 

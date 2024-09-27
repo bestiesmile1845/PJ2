@@ -1,23 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { GetMemberById, UpdateMember, DeleteMemberByID } from "../../service/https/member";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { MembersInterface } from "../../interface/IMembers";
 
-const CreateForm: React.FC = () => {
+const EditForm: React.FC = () => {
     const [formData, setFormData] = useState({
-        FirstName: "",
-        LastName: "",
+        Firstname: "",
+        Lastname: "",
         Email: "",
-        UserName: "",
-        PhoneNumber: "",
+        Username: "",
+        Phonenumber: "",
         GenderID: undefined,
         Password: "",
         Age: "",
-        TypeMember: undefined,
-        Status: undefined,
+        TypeMember: "",
+        PaymentStatus: "",
+        SuspensionStatus: "",
     });
+    
+    const MemberID = localStorage.getItem('MemberID');
+    const navigate = useNavigate();
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-        field: keyof typeof formData
-    ) => {
+    const GetMemberId = async () => {
+        if (MemberID) {
+            try {
+                let res = await GetMemberById(Number(MemberID));
+                console.log('Fetched Member:', res);
+                
+                if (!Array.isArray(res)) {
+                    res = [res];
+                }
+
+                setFormData({
+                    Firstname: res[0]?.Firstname || "",
+                    Lastname: res[0]?.Lastname || "",
+                    Email: res[0]?.Email || "",
+                    Username: res[0]?.Username || "",
+                    Phonenumber: res[0]?.Phonenumber || "",
+                    GenderID: res[0]?.GenderID || undefined,
+                    Password: "", // ไม่แสดงพาสเวิร์ดในฟอร์ม
+                    Age: res[0]?.Age || "",
+                    TypeMember: res[0]?.TypeMember || "",
+                    PaymentStatus: res[0]?.PaymentStatus || "",
+                    SuspensionStatus: res[0]?.SuspensionStatus || "",
+                });
+            } catch (error) {
+                console.error("Error fetching member data:", error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        GetMemberId();
+    }, []);
+
+    const handleDelete = async () => {
+        toast((t) => (
+            <div>
+                <p>Are you sure you want to delete this member?</p>
+                <div className="flex space-x-2">
+                    <button
+                        onClick={async () => {
+                            toast.dismiss(t.id);
+                            let res = await DeleteMemberByID(Number(MemberID));
+                            if (res) {
+                                toast.success("Successfully deleted!");
+                                setTimeout(() => navigate("/ListMember"), 2000);
+                            } else {
+                                toast.error("Please try again.");
+                            }
+                        }}
+                        className="bg-blue-600 text-white py-1 px-3 rounded"
+                    >
+                        Yes
+                    </button>
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="bg-gray-600 text-red py-1 px-3 rounded"
+                    >
+                        No
+                    </button>
+                </div>
+            </div>
+        ), { duration: Infinity });
+    };
+
+    const handleUpdateMember = async (value:MembersInterface) => {
+        let res = await UpdateMember(Number(MemberID), value);
+        if (res) {
+            toast.success("Member updated successfully!");
+            setTimeout(() => navigate("/ListMember"), 2000);
+        } else {
+            toast.error("Update failed. Please try again.");
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: keyof typeof formData) => {
         setFormData({
             ...formData,
             [field]: e.target.value,
@@ -26,189 +105,172 @@ const CreateForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data Submitted:", formData);
     };
 
     return (
-            <div className="text-2xl">
-                <h2 className="text-green-300 text-4xl mb-8 text-center ">Edit Member</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-2 gap-6">
-                        {/* First Name */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Name</label>
-                            <input
-                                id="FirstName"
-                                name="FirstName"
-                                type="text"
-                                required
-                                autoComplete="FirstName"
-                                placeholder="FirstName"
-                                value={formData.FirstName}
-                                onChange={(e) => handleInputChange(e, "FirstName")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            />
-                        </div>
-                        <div>
-                            <input
-                                id="LastName"
-                                name="LastName"
-                                type="text"
-                                required
-                                autoComplete="LastName"
-                                placeholder="LastName"
-                                value={formData.LastName}
-                                onChange={(e) => handleInputChange(e, "LastName")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none mt-10"
-                            />
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Email</label>
-                            <input
-                                id="email"
-                                name="email"
-                                required
-                                autoComplete="email"
-                                type="text"
-                                placeholder="Enter your email"
-                                value={formData.Email}
-                                onChange={(e) => handleInputChange(e, "Email")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Gender */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Gender</label>
-                            <select
-                                id="gender"
-                                name="gender"
-                                required
-                                autoComplete="gender"   
-                                value={formData.GenderID}
-                                onChange={(e) => handleInputChange(e, "GenderID")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            >
-                                <option value="">none</option>
-                                <option value={1}>Female</option>
-                                <option value={2}>Male</option>
-                            </select>
-                        </div>
-
-                        {/* Username */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Username</label>
-                            <input
-                                id="username"
-                                name="username"
-                                required
-                                autoComplete="username"
-                                type="text"
-                                placeholder="Enter username"
-                                value={formData.UserName}
-                                onChange={(e) => handleInputChange(e, "UserName")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            />
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                required
-                                autoComplete="password"
-                                type="password"
-                                placeholder="Enter password"
-                                value={formData.Password}
-                                onChange={(e) => handleInputChange(e, "Password")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            />
-                        </div>
-
-                        {/* PhoneNumber */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Phone Number</label>
-                            <input
-                                id="PhoneNumber"
-                                name="PhoneNumber"
-                                type="text"
-                                required
-                                autoComplete="PhoneNumber"
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                                placeholder="Enter Phone Number"
-                                value={formData.PhoneNumber}
-                                onChange={(e) => handleInputChange(e, "PhoneNumber")}
-                            />
-                        </div>
-                        {/* Age */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Age</label>
-                            <input
-                                id="Age"
-                                name="Age"
-                                type="text"
-                                required
-                                autoComplete="Age"
-                                value={formData.Age}
-                                onChange={(e) => handleInputChange(e, "Age")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                                placeholder="Enter your age"
-                            />
-                        </div>
-
-                        {/* Type Member */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Type Member</label>
-                            <select
-                                value={formData.TypeMember}
-                                onChange={(e) => handleInputChange(e, "TypeMember")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            >
-                                <option value="">none</option>
-                                <option value={1}>Basic</option>
-                                <option value={2}>Standard</option>
-                                <option value={2}>Premium</option>
-                            </select>
-                        </div>
-
-                        {/* Status */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Status</label>
-                            <select
-                                value={formData.Status}
-                                onChange={(e) => handleInputChange(e, "Status")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            >
-                                <option value="">none</option>
-                                <option value={1}>Active</option>
-                                <option value={2}>Inactive</option>
-                            </select>
-                        </div>
+        <div className="text-2xl">
+            <h2 className="text-green-300 text-4xl mb-8 text-center">Edit Member</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-2 gap-6">
+                    {/* First Name */}
+                    <div>
+                        <label className="block text-green-300 mb-2">First Name</label>
+                        <input
+                            id="FirstName"
+                            type="text"
+                            required
+                            autoComplete="FirstName"
+                            placeholder="First Name"
+                            value={formData.Firstname}
+                            onChange={(e) => handleInputChange(e, "Firstname")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
                     </div>
-
-                    {/* Buttons */}
-                    <div className="flex justify-end space-x-4 mt-8">
-                        <button
-                            type="button"
-                            className="bg-red-600 text-white py-2 px-6 rounded-lg focus:outline-none hover:bg-black"
-                        >
-                            Delete
-                        </button>
-                        <button
-                            type="submit"
-                            className="bg-hover text-black py-2 px-6 rounded-lg focus:outline-none hover:!bg-green"
-                        >
-                            Update
-                        </button>
+                    {/* Last Name */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Last Name</label>
+                        <input
+                            id="LastName"
+                            type="text"
+                            required
+                            autoComplete="LastName"
+                            placeholder="Last Name"
+                            value={formData.Lastname}
+                            onChange={(e) => handleInputChange(e, "Lastname")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
                     </div>
-                </form>
-             </div>
-       
+                    {/* Email */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            required
+                            autoComplete="email"
+                            placeholder="Enter your email"
+                            value={formData.Email}
+                            onChange={(e) => handleInputChange(e, "Email")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
+                    </div>
+                    {/* Gender */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Gender</label>
+                        <select
+                            id="gender"
+                            required
+                            value={formData.GenderID}
+                            onChange={(e) => handleInputChange(e, "GenderID")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        >
+                            <option value="">Select Gender</option>
+                            <option value={1}>Female</option>
+                            <option value={2}>Male</option>
+                        </select>
+                    </div>
+                    {/* Username */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Username</label>
+                        <input
+                            id="username"
+                            type="text"
+                            required
+                            autoComplete="username"
+                            placeholder="Enter username"
+                            value={formData.Username}
+                            onChange={(e) => handleInputChange(e, "Username")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
+                    </div>
+                    {/* Password */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            required
+                            autoComplete="password"
+                            placeholder="Enter password"
+                            value={formData.Password}
+                            onChange={(e) => handleInputChange(e, "Password")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
+                    </div>
+                    {/* Phone Number */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Phone Number</label>
+                        <input
+                            id="PhoneNumber"
+                            type="text"
+                            required
+                            placeholder="Enter Phone Number"
+                            value={formData.Phonenumber}
+                            onChange={(e) => handleInputChange(e, "Phonenumber")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
+                    </div>
+                    {/* Age */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Age</label>
+                        <input
+                            id="Age"
+                            type="text"
+                            required
+                            placeholder="Enter your age"
+                            value={formData.Age}
+                            onChange={(e) => handleInputChange(e, "Age")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        />
+                    </div>
+                    {/* Type Member */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Type Member</label>
+                        <select
+                            value={formData.TypeMember}
+                            onChange={(e) => handleInputChange(e, "TypeMember")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        >
+                            <option value="">Select Type Member</option>
+                            <option value="Basic">Basic</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Premium">Premium</option>
+                        </select>
+                    </div>
+                    {/* Suspension Status */}
+                    <div>
+                        <label className="block text-green-300 mb-2">Suspension Status</label>
+                        <select
+                            value={formData.SuspensionStatus}
+                            onChange={(e) => handleInputChange(e, "SuspensionStatus")}
+                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
+                        >
+                            <option value="">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="flex justify-end space-x-4 mt-8">
+                    <button
+                        type="button"
+                        onClick={handleDelete}
+                        className="bg-red-600 text-white py-2 px-6 rounded-lg"
+                    >
+                        Delete
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => handleUpdateMember(formData)} // Pass formData here
+                        className="bg-hover text-black py-2 px-6 rounded-lg focus:outline-none hover:!bg-green"
+                    >
+                        Update
+                    </button>
+                </div>
+            </form>
+            <Toaster />
+        </div>
     );
 };
 
-export default CreateForm;
+export default EditForm;

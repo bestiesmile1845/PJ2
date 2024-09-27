@@ -15,5 +15,4 @@ type Admin struct {
 	Password  string    
 	GenderID  uint 
 	Gender    Genders  `gorm:"foreignKey: gender_id" json:"gender"`
-	Classes []Class `gorm:"foreignKey:AdminID"`
 }

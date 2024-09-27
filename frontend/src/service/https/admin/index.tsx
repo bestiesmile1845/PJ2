@@ -46,18 +46,42 @@ async function CreateAdmin(data: AdminsInterface) {
         body: JSON.stringify(data),
     };
 
-    return await fetchData(`${apiUrl}/Createadmin`, requestOptions);
+    return await fetchData(`${apiUrl}/CreateAdmin`, requestOptions);
 }
 
-async function UpdateAdmin(data: AdminsInterface) {
+async function UpdateAdminById(id: number | undefined, data: AdminsInterface) {
+    // สร้างออบเจ็กต์ใหม่ที่มีเฉพาะข้อมูลที่ต้องการอัปเดต
+    const updateData = {
+        Firstname: data.Firstname,
+        Lastname: data.Lastname,
+        Email: data.Email,
+        Username: data.Username,
+        GenderID: data.GenderID,
+        // Password is usually not included in updates for security reasons
+    };
+  
     const requestOptions = {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { 
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData), // ส่งเฉพาะข้อมูลที่ต้องการอัปเดต
     };
-
-    return await fetchData(`${apiUrl}/admins`, requestOptions);
+  
+    try {
+        const response = await fetch(`${apiUrl}/UpdateAdmin/${id}`, requestOptions);
+        const res = await response.json();
+  
+        if (res.data) {
+            return { status: true, message: res.data };
+        } else {
+            return { status: false, message: res.error };
+        }
+    } catch (error: any) {
+        return { status: false, message: error.message };
+    }
 }
+
 
 async function DeleteAdminByID(id: number | undefined) {
     if (id === undefined) return false;
@@ -69,4 +93,4 @@ async function DeleteAdminByID(id: number | undefined) {
     return await fetchData(`${apiUrl}/admins/${id}`, requestOptions);
 }
 
-export { GetAdmins, GetAdminById, CreateAdmin, UpdateAdmin, DeleteAdminByID };
+export { GetAdmins, GetAdminById, CreateAdmin, UpdateAdminById, DeleteAdminByID };

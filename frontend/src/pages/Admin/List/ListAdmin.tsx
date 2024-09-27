@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "../../../components/manu/Nav";
 import SideBar from "../../../components/admin/class/SideBar";
 import { GrAddCircle } from "react-icons/gr";
-import TableList from "../../../components/Admintablelist"
+import TableList from "../../../components/tablelist/Admintablelist"
 import { Link } from 'react-router-dom';
 
 const ClassCreate: React.FC = () => {

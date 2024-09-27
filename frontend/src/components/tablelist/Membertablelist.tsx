@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { GetMembers } from "../service/https/member";
-import {MembersInterface }from "../interface/IMembers";
+import { GetMembers } from "../../service/https/member";
+import {MembersInterface }from "../../interface/IMembers";
 import { Link } from 'react-router-dom';
 const TableList: React.FC = () => {
   const [members, setMembers] = useState<MembersInterface[]>([]); // Initialize an empty array for users
@@ -15,6 +15,11 @@ const TableList: React.FC = () => {
     };
     getMembers();
   }, []);
+  const handlegoto = (id: number | undefined) => {
+    localStorage.setItem('MemberID', String(id));
+    console.log(id);
+    console.log(`Editing data with id: ${id}`);
+  };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -42,7 +47,7 @@ const TableList: React.FC = () => {
                 <td className="px-6 py-4">{members.TypeMember}</td>
                 <td className="px-6 py-4">{members.SuspensionStatus}</td>
                 <td className="px-6 py-4">
-                    <Link to="/EditMember"><a href="#" className="font-medium text-green dark:text-green hover:underline">Edit</a></Link>
+                    <Link to="/EditMember" onClick={() => handlegoto(members.ID)}><a href="#" className="font-medium text-green dark:text-green hover:underline">Edit</a></Link>
                   
                 </td>
               </tr>

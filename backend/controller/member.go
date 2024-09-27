@@ -126,7 +126,7 @@ func DeleteMember(c *gin.Context) {
 
 	id := c.Param("id")
 	db := config.DB()
-	if tx := db.Exec("DELETE FROM users WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := db.Exec("DELETE FROM members WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "id not found"})
 		return
 	}
@@ -138,10 +138,10 @@ func DeleteMember(c *gin.Context) {
 func UpdateMember(c *gin.Context) {
 	var member entity.Member
 
-	UserID := c.Param("id")
+	MemberID := c.Param("Memberid")
 
 	db := config.DB()
-	result := db.First(&member, UserID)
+	result := db.First(&member, MemberID)
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "id not found"})
 		return

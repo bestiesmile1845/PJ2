@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignInInterface } from "../../interfaces/ISignIn";
-import { SignIn } from "../../services/https"; // Import your SignIn function
+import { SignInInterface } from "../../interface/ISignIn";
+import { SignIn } from "../../service/https"; // Import your SignIn function
 import toast, { Toaster } from "react-hot-toast"; // Import toast functions
 
 const LoginForm: React.FC = () => {

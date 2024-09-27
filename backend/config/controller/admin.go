@@ -5,7 +5,6 @@ import (
 
 	"example.com/pj2/config"
 	"example.com/pj2/entity"
-
 	"github.com/gin-gonic/gin"
 )
 

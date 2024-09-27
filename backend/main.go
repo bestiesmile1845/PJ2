@@ -30,7 +30,7 @@ func main() {
 		router.GET("/members", controller.ListMembers)
 		router.GET("/member/:id", controller.GetMember)
 		router.POST("/members", controller.CreateMember)
-		router.PATCH("/members", controller.UpdateMember)
+		router.PATCH("/UpdateMember/:id", controller.UpdateMember)
 		router.DELETE("/members/:id", controller.DeleteMember)
 
 		// Gender Routes
@@ -39,8 +39,8 @@ func main() {
 		// Admin Routers
 		router.GET("/admins", controller.ListAdmins)
 		router.GET("/admin/:id", controller.GetAdmin)
-		router.POST("/Createadmin", controller.CreateAdmin)
-		router.PATCH("/admins", controller.UpdateAdmin)
+		router.POST("/CreateAdmin", controller.CreateAdmin)
+		router.PATCH("/UpdateAdmin/:id", controller.UpdateAdmin)
 		router.DELETE("/admins/:id", controller.DeleteAdmin)
 	}
 

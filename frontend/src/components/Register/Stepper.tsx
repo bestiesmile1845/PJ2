@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MembersInterface } from "../../interface/IMembers"; // นำเข้า interface
 import { CreateMember } from "../../service/https/member";
+import toast, { Toaster } from "react-hot-toast"; // Import toast functions
 
 const Stepper: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -48,19 +49,20 @@ const Stepper: React.FC = () => {
             let res = await CreateMember(formData); // ส่งข้อมูล formData ไปที่ API
             console.log(res);
             if (res) {
-                alert('ข้อมูลของท่านเข้าสู่ระบบ');
+                toast.success("Successfully")
+                
                 // Reset form or navigate user
             } else if (res.errors) {
                 console.log('Errors:', res.errors);
                 // If the API returns specific errors
-                alert(`Submission failed: ${res.errors.join(', ')}`);
+                toast.error(`Submission failed: ${res.errors.join(', ')}`);
             } else {
                 console.log('Unknown error occurred');
-                alert('Submission failed, please try again.');
+                toast.error('Submission failed, please try again.');
             }
         } catch (error) {
             console.error("Error saving data:", error);
-            alert('Error saving data');
+            toast.error('Error saving data');
         }
 
     };
@@ -234,7 +236,7 @@ const Stepper: React.FC = () => {
                         if (validateStep()) {
                             handleSubmit(); // เรียกใช้ฟังก์ชัน handleSubmit()
                         } else {
-                            alert("Please fill out all fields before proceeding.");
+                            toast.error("Please fill out all fields before proceeding.");
                         }
                     }}
                         className="px-4 py-2 bg-hover text-white rounded"
@@ -247,7 +249,7 @@ const Stepper: React.FC = () => {
                             if (validateStep()) {
                                 setCurrentStep((prev) => Math.min(prev + 1, steps.length));
                             } else {
-                                alert("Please fill out all fields before proceeding.");
+                                toast.error("Please fill out all fields before proceeding.");
                             }
                         }}
                         className="px-4 py-2 bg-hover text-white rounded"
@@ -256,7 +258,9 @@ const Stepper: React.FC = () => {
                     </button>
                 )}
             </div>
+            <Toaster />
         </div>
+        
     );
 };
 
