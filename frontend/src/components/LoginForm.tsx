@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
                 if (result.role === "admin") {
                     setTimeout(() => navigate("/dashboard"), 600); // Delay navigation
                 } else if (result.role === "member") {
-                    setTimeout(() => navigate("/dashboard"), 600); // Delay navigation
+                    setTimeout(() => navigate("/Home"), 600); // Delay navigation
                 }
             } else {
                 // Handle case where result doesn't have the expected fields
