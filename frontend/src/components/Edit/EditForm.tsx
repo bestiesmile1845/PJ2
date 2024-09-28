@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { GetMemberById, UpdateMember, DeleteMemberByID } from "../../service/https/member";
+import { GetPackages } from "../../service/https/package"; // Import package fetching service
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { MembersInterface } from "../../interface/IMembers";
+import { PackageInterface } from "../../interface/IPackage";
 
 const EditForm: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -15,10 +17,9 @@ const EditForm: React.FC = () => {
         Password: "",
         Age: "",
         TypeMember: "",
-        PaymentStatus: "",
-        SuspensionStatus: "",
     });
-    
+
+    const [packages, setPackages] = useState<PackageInterface[]>([]); // State for packages
     const MemberID = localStorage.getItem('MemberID');
     const navigate = useNavigate();
 
@@ -39,11 +40,9 @@ const EditForm: React.FC = () => {
                     Username: res[0]?.Username || "",
                     Phonenumber: res[0]?.Phonenumber || "",
                     GenderID: res[0]?.GenderID || undefined,
-                    Password: "", // ไม่แสดงพาสเวิร์ดในฟอร์ม
+                    Password: "", // Don't show password in the form
                     Age: res[0]?.Age || "",
                     TypeMember: res[0]?.TypeMember || "",
-                    PaymentStatus: res[0]?.PaymentStatus || "",
-                    SuspensionStatus: res[0]?.SuspensionStatus || "",
                 });
             } catch (error) {
                 console.error("Error fetching member data:", error);
@@ -51,8 +50,18 @@ const EditForm: React.FC = () => {
         }
     };
 
+    const GetPackagesList = async () => {
+        try {
+            const res = await GetPackages(); // Fetch package data
+            setPackages(res); // Assuming res is an array of packages
+        } catch (error) {
+            console.error("Error fetching packages:", error);
+        }
+    };
+
     useEffect(() => {
         GetMemberId();
+        GetPackagesList(); // Fetch packages on mount
     }, []);
 
     const handleDelete = async () => {
@@ -86,7 +95,7 @@ const EditForm: React.FC = () => {
         ), { duration: Infinity });
     };
 
-    const handleUpdateMember = async (value:MembersInterface) => {
+    const handleUpdateMember = async (value: MembersInterface) => {
         let res = await UpdateMember(Number(MemberID), value);
         if (res) {
             toast.success("Member updated successfully!");
@@ -105,6 +114,7 @@ const EditForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        handleUpdateMember(formData); // Call the update function
     };
 
     return (
@@ -232,22 +242,9 @@ const EditForm: React.FC = () => {
                             className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
                         >
                             <option value="">Select Type Member</option>
-                            <option value="Basic">Basic</option>
-                            <option value="Standard">Standard</option>
-                            <option value="Premium">Premium</option>
-                        </select>
-                    </div>
-                    {/* Suspension Status */}
-                    <div>
-                        <label className="block text-green-300 mb-2">Suspension Status</label>
-                        <select
-                            value={formData.SuspensionStatus}
-                            onChange={(e) => handleInputChange(e, "SuspensionStatus")}
-                            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                        >
-                            <option value="">Select Status</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
+                            {packages.map((pkg) => (
+                                <option key={pkg.ID} value={pkg.PackageName}>{pkg.PackageName}</option> // Adjust according to your package structure
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -260,8 +257,7 @@ const EditForm: React.FC = () => {
                         Delete
                     </button>
                     <button
-                        type="button"
-                        onClick={() => handleUpdateMember(formData)} // Pass formData here
+                        type="submit" // Changed to submit to trigger handleSubmit
                         className="bg-hover text-black py-2 px-6 rounded-lg focus:outline-none hover:!bg-green"
                     >
                         Update
