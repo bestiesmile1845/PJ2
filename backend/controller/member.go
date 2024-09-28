@@ -162,7 +162,12 @@ func UpdateMember(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request"})
 		return
 	}
-
+	var existingMember entity.Member
+	if err := db.Where("username = ?", member.Username).First(&existingMember).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "username already exists"})
+		return
+	}
+	
 	c.JSON(http.StatusOK, gin.H{"message": "Updated successful"})
 }
 func CheckSubscription(c *gin.Context) {

@@ -22,6 +22,7 @@ import Trainer from "./pages/Admin/Class/Trainer";
 import PackageAd from "./pages/Admin/Packages";
 import Createpackage from "./pages/Admin/Packages/Create";
 import EditPackage from "./pages/Admin/Packages/Edit";
+import PaymentList from './pages/Admin/payment/list/PaymentList';
 function App() {
   return (
     
@@ -47,6 +48,7 @@ function App() {
         <Route path="/admin/package" element={<PackageAd />} />
         <Route path="admin/package/create" element={<Createpackage />} />
         <Route path="/admin/package/edit/:id" element={<EditPackage />} />
+        <Route path="/admin/payment" element={<PaymentList/>} />
 
       </Routes>
   );

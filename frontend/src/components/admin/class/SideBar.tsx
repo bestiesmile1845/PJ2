@@ -42,7 +42,7 @@ const SideBar: React.FC = () => {
         },
         { title: "Equipments", icon: <MdFitnessCenter /> },
         { title: "Package", icon :<RiBillLine />, link : "/admin/package"},
-        { title: "Payments", icon: <FaMoneyBills /> },
+        { title: "Payments", icon: <FaMoneyBills />,link : "/admin/payment" },
     ];
 
     const isActive = (menuLink: string | undefined): boolean => {

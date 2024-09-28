@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { AdminsInterface } from "../../interface/IAdmin";
 import { CreateAdmin } from "../../service/https/admin";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CreateForm: React.FC = () => {
     const [formData, setFormData] = useState<AdminsInterface>({
@@ -21,28 +23,34 @@ const CreateForm: React.FC = () => {
             [field]: field === 'GenderID' ? Number(e.target.value) : e.target.value,
         });
     };
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevent default form submission
+    
         try {
             console.log("Form Data:", formData);
-            let res = await CreateAdmin(formData); // Send formData to API
-            console.log(res);
-            if (res) {
-                alert('ข้อมูลของท่านเข้าสู่ระบบ');
-                // Reset form or navigate user
+            const res = await CreateAdmin(formData); // Send formData to API
+    
+            // Check if the response is successful
+            if (res && res.data) {
+                toast.success('Successfully created admin!');
+                setTimeout(() => navigate("/ListAdmin"), 2000);
+                // Optionally reset form data here if needed
             } else if (res.errors) {
-                console.log('Errors:', res.errors);
-                alert(`Submission failed: ${res.errors.join(', ')}`);
+                // Handle validation errors returned from the API
+                toast.error(`Submission failed: ${res.errors.join(', ')}`);
+                setTimeout(() => navigate("/CreateAdmin"), 2000);
             } else {
-                console.log('Unknown error occurred');
-                alert('Submission failed, please try again.');
+                toast.error('Submission failed, please try again.');
+                setTimeout(() => navigate("/CreateAdmin"), 2000);
             }
         } catch (error) {
-            console.error("Error saving data:", error);
-            alert('Error saving data');
+            toast.error('Error saving data. Please try again.');
+            setTimeout(() => navigate("/CreateAdmin"), 2000);
         }
     };
+    
 
     return (
         <div className="text-2xl ">
@@ -152,6 +160,7 @@ const CreateForm: React.FC = () => {
                     </button>
                 </div>
             </form>
+            <Toaster />
         </div>
     );
 };

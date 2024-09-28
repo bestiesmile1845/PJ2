@@ -5,7 +5,7 @@ import { GrAddCircle } from "react-icons/gr";
 import TableList from "../../../components/tablelist/Admintablelist"
 import { Link } from 'react-router-dom';
 
-const ClassCreate: React.FC = () => {
+const ListAdmin: React.FC = () => {
    
 
     return (
@@ -37,4 +37,4 @@ const ClassCreate: React.FC = () => {
     );
 };
 
-export default ClassCreate;
+export default ListAdmin;

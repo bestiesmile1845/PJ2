@@ -12,7 +12,7 @@ const Nav: React.FC<NavbarProps> = ({ title }) => {
     const [userInitials, setUserInitials] = useState<string>("");
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect(() => {   
         // ดึงข้อมูลจาก localStorage หรือ API
         const fetchUserData = async () => {
             const userId = localStorage.getItem("id");
@@ -30,7 +30,7 @@ const Nav: React.FC<NavbarProps> = ({ title }) => {
 
                     if (userData) {
                         // สร้างอักษรย่อจากชื่อผู้ใช้
-                        const initials = `${userData.FirstName.charAt(0)}${userData.LastName.charAt(0)}`.toUpperCase();
+                        const initials = `${userData.Firstname.charAt(0)}${userData.Lastname.charAt(0)}`.toUpperCase();
                         setUserInitials(initials);
                     } else {
                         setUserInitials("JL"); // ใช้ค่าเริ่มต้นถ้าหากไม่พบข้อมูล

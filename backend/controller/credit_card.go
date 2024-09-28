@@ -24,8 +24,9 @@ func CreateCreditCard(c *gin.Context) {
 
 	// ค้นหา Payment ด้วย id
 	var payment entity.Payment
-	db.First(&payment, creditcard.PaymentID)
-	if creditcard.ID == 0 {
+	result := db.First(&payment, creditcard.PaymentID)
+	if result.Error != nil {
+		// Payment not found
 		c.JSON(http.StatusNotFound, gin.H{"error": "payment not found"})
 		return
 	}
@@ -35,9 +36,9 @@ func CreateCreditCard(c *gin.Context) {
 		NameOnCard: creditcard.NameOnCard,
 		CardNumber: creditcard.CardNumber,
         ExpiryDate: creditcard.ExpiryDate,
-        CVV:        creditcard.CVV,
-        PaymentID:  creditcard.PaymentID,
-        Payment:    payment,  //โยงความสัมพันธ์กับ Entity Payment
+		CVV:        creditcard.CVV,
+		PaymentID:  creditcard.PaymentID,
+		Payment:    payment, // Link to Payment entity
 	}
 
 	// บันทึก

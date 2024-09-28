@@ -42,6 +42,12 @@ func CreateAdmin(c *gin.Context) {
 		Gender:    genders, // โยงความสัมพันธ์กับ Entity Gender
 	}
 
+	var existingAdmin entity.Admin
+	if err := db.Where("username = ?", admin.Username).First(&existingAdmin).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "username already exists"})
+		return
+	}
+
 	// บันทึก
 	if err := db.Create(&m).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -111,6 +117,11 @@ func UpdateAdmin(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&admin); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request, unable to map payload"})
+		return
+	}
+	var existingAdmin entity.Admin
+	if err := db.Where("username = ?", admin.Username).First(&existingAdmin).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "username already exists"})
 		return
 	}
 

@@ -92,5 +92,14 @@ async function DeleteAdminByID(id: number | undefined) {
 
     return await fetchData(`${apiUrl}/admins/${id}`, requestOptions);
 }
+async function CheckSubscription(memberId: number | undefined) {
+    // If the memberId is undefined, return false
+    if (memberId === undefined) return false;
+    const requestOptions = {
+        method: "POST",
+    };
+    // Change the endpoint to match your subscription check API
+    return await fetchData(`${apiUrl}/members/${memberId}/subscribe`, requestOptions);
+}
 
-export { GetAdmins, GetAdminById, CreateAdmin, UpdateAdminById, DeleteAdminByID };
+export { CheckSubscription,GetAdmins, GetAdminById, CreateAdmin, UpdateAdminById, DeleteAdminByID };

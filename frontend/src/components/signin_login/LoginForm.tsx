@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignInInterface } from "../../interface/ISignIn";
 import { SignIn } from "../../service/https"; // Import your SignIn function
 import toast, { Toaster } from "react-hot-toast"; // Import toast functions
+import { CheckSubscription } from "../../service/https/admin";
+
 
 const LoginForm: React.FC = () => {
     const [username, setUsername] = useState<string>("");
@@ -28,7 +30,13 @@ const LoginForm: React.FC = () => {
                 if (result.role === "admin") {
                     setTimeout(() => navigate("/dashboard"), 600); // Delay navigation
                 } else if (result.role === "member") {
-                    setTimeout(() => navigate("/home"), 600); // Delay navigation
+                    const check = await CheckSubscription(result.id);
+                    console.log(check);
+                    if (check.message === "Subscribed") {
+                        setTimeout(() => navigate("/home"), 600); // Delay navigation
+                    } else {
+                        setTimeout(() => navigate("/package"), 600);
+                    } // Delay navigation
                 }
             } else {
                 // Handle case where result doesn't have the expected fields

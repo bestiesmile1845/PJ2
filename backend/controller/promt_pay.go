@@ -24,8 +24,9 @@ func CreatePromtpay(c *gin.Context) {
 
 	// ค้นหา Payment ด้วย id
 	var payment entity.Payment
-	db.First(&payment, promtpay.PaymentID)
-	if promtpay.ID == 0 {
+	result := db.First(&payment, promtpay.PaymentID)
+	if result.Error != nil {
+		// Payment not found
 		c.JSON(http.StatusNotFound, gin.H{"error": "payment not found"})
 		return
 	}

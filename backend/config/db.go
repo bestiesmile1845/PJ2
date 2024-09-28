@@ -96,7 +96,7 @@ func SetupDatabase() {
 	Package := entity.Package{
 		PackageName:  "Daily",
 		Description:  "Members can access all services within the fitness center for a full day",
-		Price:     "59THB/d.",
+		Price:     "59",
 		Duration_days: "1 day" ,
 		
 	}

@@ -1,6 +1,6 @@
-import { PackageInterface } from "../../../interfaces/IPackage";
+import { PackageInterface } from "../../../interface/IPackage";
 
-const apiUrl = "http://localhost:3036";
+const apiUrl = "http://localhost:8000";
 
 // Helper function for handling fetch requests
 const fetchData = async (url: string, options: RequestInit) => {

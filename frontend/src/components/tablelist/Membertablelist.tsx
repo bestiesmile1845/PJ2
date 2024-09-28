@@ -29,7 +29,7 @@ const TableList: React.FC = () => {
             <th scope="col" className="px-6 py-3">First name</th>
             <th scope="col" className="px-6 py-3">Username</th>
             <th scope="col" className="px-6 py-3">TypeMember</th>
-            <th scope="col" className="px-6 py-3">SuspensionStatus</th>
+            <th scope="col" className="px-6 py-3"></th>
             <th scope="col" className="px-6 py-3"></th>
           </tr>
         </thead>
@@ -45,7 +45,7 @@ const TableList: React.FC = () => {
                 </th>
                 <td className="px-6 py-4">{members.Username}</td>
                 <td className="px-6 py-4">{members.TypeMember}</td>
-                <td className="px-6 py-4">{members.SuspensionStatus}</td>
+                <td className="px-6 py-4"></td>
                 <td className="px-6 py-4">
                     <Link to="/EditMember" onClick={() => handlegoto(members.ID)}><a href="#" className="font-medium text-green dark:text-green hover:underline">Edit</a></Link>
                   

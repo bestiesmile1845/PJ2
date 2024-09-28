@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GetMemberById, UpdateMember, DeleteMemberByID } from "../../service/https/member";
-import { GetPackages } from "../../service/https/package"; // Import package fetching service
+import { GetPackages } from "../../service/https/package";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { MembersInterface } from "../../interface/IMembers";
@@ -19,7 +19,8 @@ const EditForm: React.FC = () => {
         TypeMember: "",
     });
 
-    const [packages, setPackages] = useState<PackageInterface[]>([]); // State for packages
+    const [packages, setPackages] = useState<PackageInterface[]>([]);
+    const [passwordError, setPasswordError] = useState<string>(""); // State for password error
     const MemberID = localStorage.getItem('MemberID');
     const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const EditForm: React.FC = () => {
                     Username: res[0]?.Username || "",
                     Phonenumber: res[0]?.Phonenumber || "",
                     GenderID: res[0]?.GenderID || undefined,
-                    Password: "", // Don't show password in the form
+                    Password: "",
                     Age: res[0]?.Age || "",
                     TypeMember: res[0]?.TypeMember || "",
                 });
@@ -52,8 +53,8 @@ const EditForm: React.FC = () => {
 
     const GetPackagesList = async () => {
         try {
-            const res = await GetPackages(); // Fetch package data
-            setPackages(res); // Assuming res is an array of packages
+            const res = await GetPackages();
+            setPackages(res);
         } catch (error) {
             console.error("Error fetching packages:", error);
         }
@@ -61,7 +62,7 @@ const EditForm: React.FC = () => {
 
     useEffect(() => {
         GetMemberId();
-        GetPackagesList(); // Fetch packages on mount
+        GetPackagesList();
     }, []);
 
     const handleDelete = async () => {
@@ -106,15 +107,59 @@ const EditForm: React.FC = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: keyof typeof formData) => {
-        setFormData({
-            ...formData,
-            [field]: e.target.value,
-        });
+        const { value } = e.target;
+        let regex = /.*/; // Default regex that allows everything
+    
+        switch (field) {
+            case "Firstname":
+            case "Lastname":
+            case "Username":
+                regex = /^[a-zA-Z\s]*$/; // Letters and spaces only
+                break;
+            case "Phonenumber":
+                regex = /^[0-9]*$/; // Numbers only
+                if (value.length <= 10) {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        [field]: value,
+                    }));
+                }
+                return;
+            case "Age":
+                regex = /^[0-9]*$/; // Numbers only
+                if (value.length <= 2) {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        [field]: value,
+                    }));
+                }
+                return;
+            case "Email":
+                regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email format
+                break;
+            case "Password":
+                regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+                break;
+            default:
+                break;
+        }
+    
+        if (regex.test(value) || field === "GenderID") {
+            setFormData((prevData) => ({
+                ...prevData,
+                [field]: value,
+            }));
+        }
     };
+    
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        handleUpdateMember(formData); // Call the update function
+        if (!passwordError) {
+            handleUpdateMember(formData);
+        } else {
+            toast.error("Please fix the errors before submitting.");
+        }
     };
 
     return (
@@ -206,6 +251,7 @@ const EditForm: React.FC = () => {
                             onChange={(e) => handleInputChange(e, "Password")}
                             className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
                         />
+                        {passwordError && <p className="text-red-500">{passwordError}</p>} {/* Display password error */}
                     </div>
                     {/* Phone Number */}
                     <div>
@@ -243,7 +289,7 @@ const EditForm: React.FC = () => {
                         >
                             <option value="">Select Type Member</option>
                             {packages.map((pkg) => (
-                                <option key={pkg.ID} value={pkg.PackageName}>{pkg.PackageName}</option> // Adjust according to your package structure
+                                <option key={pkg.ID} value={pkg.PackageName}>{pkg.PackageName}</option>
                             ))}
                         </select>
                     </div>
@@ -257,7 +303,7 @@ const EditForm: React.FC = () => {
                         Delete
                     </button>
                     <button
-                        type="submit" // Changed to submit to trigger handleSubmit
+                        type="submit"
                         className="bg-hover text-black py-2 px-6 rounded-lg focus:outline-none hover:!bg-green"
                     >
                         Update

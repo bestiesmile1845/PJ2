@@ -90,6 +90,28 @@ const EditFrom: React.FC = () => {
             ...formData,
             [field]: e.target.value,
         });
+        const { value } = e.target;
+
+        let regex ;
+
+        if (field === "Firstname" || field === "Lastname" || field === "Username") {
+            regex = /^[a-zA-Z\s]*$/; // Letters and spaces only
+        }  else if (field=="Email"){
+            regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        } 
+        else if (field === "Password") {
+            // รูปแบบรหัสผ่านที่ต้องมีตัวอักษรใหญ่ ตัวเล็ก และตัวเลข
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+            if (!passwordRegex.test(value) && value !== "") {
+                setPasswordError("Password must contain at least one uppercase letter, one lowercase letter, and one digit.");
+            } else {
+                setPasswordError(""); // รีเซ็ตข้อความแสดงข้อผิดพลาด
+            }
+        }
+        else {
+            regex = /.*/; // Allow everything for other fields
+        }
+
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -229,3 +251,7 @@ const EditFrom: React.FC = () => {
 };
 
 export default EditFrom;
+function setPasswordError(arg0: string) {
+    throw new Error("Function not implemented.");
+}
+

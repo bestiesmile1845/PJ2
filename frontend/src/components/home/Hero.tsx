@@ -13,7 +13,7 @@ const Hero: React.FC = () => (
                         FitFlowz offers diverse fitness classes for all levels, with full equipment and expert trainers. Achieve your
                         fitness goals with us, join today!
                     </p>
-                    <Link to="/register">
+                    <Link to="/Package">
                         <button className="mt-4 text-black px-5 py-3 bg-green3 rounded-full shadow-[0_0_15px_4px_rgba(201,254,84,0.7)] transition hover:shadow-none">
                             Start Now
                         </button>

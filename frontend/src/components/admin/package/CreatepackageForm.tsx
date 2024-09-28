@@ -46,10 +46,10 @@ const CreatePackageForm: React.FC = () => {
                 Price: "", // Reset to empty string
                 Duration_days: "",
             });
-
-            navigate("/admin/package");
+            setTimeout(() => navigate("/admin/package"));
         } else {
-            alert("Failed to create package.");
+            toast.error("Failed to create package.")
+            
         }
     };
 
