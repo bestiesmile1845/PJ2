@@ -1,9 +1,9 @@
 import React from "react";
 import Nav from "../../components/manu/Nav";
 import SideBar from "../../components/admin/class/SideBar";
-import { GrAddCircle } from "react-icons/gr";
+// import { GrAddCircle } from "react-icons/gr";
 import TableList from "../../components/tablelist/Membertablelist"
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const ClassCreate: React.FC = () => {
    

@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
                 toast.error("Unexpected response from server. Please try again.");
             }
         } catch (error) {
-            console.error("Failed to sign in:", error);
+            console.error("failed to sign in:", error);
             toast.error("Invalid username or password. Please try again."); // Show error toast
         }
     };

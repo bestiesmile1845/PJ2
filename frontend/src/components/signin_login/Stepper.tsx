@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { CreateMember, GetGenders } from "../../services/https/member";
-import { MembersInterface } from "../../interfaces/IMember"; // Import MembersInterface
-import { GendersInterface } from "../../interfaces/IGender";
+import { CreateMember, GetGenders } from "../../service/https/member";
+import { MembersInterface } from "../../interface/IMembers"; // Import MembersInterface
+import { GendersInterface } from "../../interface/IGender";
 import { useNavigate } from "react-router-dom";
 
 const Stepper: React.FC = () => {

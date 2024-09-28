@@ -14,9 +14,9 @@ type Member struct {
 	Username         string
 	Phonenumber      string
 	GenderID         uint
-	TypeMember       string
-	PaymentStatus    string
-	SuspensionStatus string
 	Age              string
-	Gender           Genders `gorm:"foreignKey: gender_id" json:"gender"`
+	Gender           Genders `gorm:"foreignKey:GenderID"`
+	Bookings []Booking `gorm:"foreignKey:MemberID"`
+
+	Payments [] Payment `gorm:"foreignKey:MemberID "`
 }

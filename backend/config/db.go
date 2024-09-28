@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"time"
 	"example.com/pj2/entity"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -24,62 +25,92 @@ func ConnectionDB() {
 
 func SetupDatabase() {
 	// AutoMigrate will create the tables and columns if they do not exist
-	err := db.AutoMigrate(
+	db.AutoMigrate(
 		&entity.Member{},
 		&entity.Genders{},
 		&entity.Admin{},
+		&entity.ClassType{},
+		&entity.Trainer{},
+		&entity.Class{},
+		&entity.Booking{},
+		&entity.Package{},
+		&entity.Payment{},
+		&entity.PromptPay{},
+		&entity.CreditCard{},
+
 	)
-	if err != nil {
-		fmt.Printf("Error during AutoMigrate: %v\n", err)
-		return
-	}
+	GenderMale := entity.Genders{Gender: "Male"}
+	GenderFemale := entity.Genders{Gender: "Female"}
 
-	// Create gender entries if they do not exist
-	genders := []entity.Genders{
-		{Gender: "Male"},
-		{Gender: "Female"},
-	}
-	for _, gender := range genders {
-		db.FirstOrCreate(&gender, entity.Genders{Gender: gender.Gender})
-	}
+	db.FirstOrCreate(&GenderMale, &entity.Genders{Gender: "Male"})
+	db.FirstOrCreate(&GenderFemale, &entity.Genders{Gender: "Female"})
 
-	// Hash passwords
-	hashedPassword, err := HashPassword("123456")
-	if err != nil {
-		fmt.Printf("Error hashing password: %v\n", err)
-		return
-	}
+	TrainerJib := entity.Trainer{Name: "Jib", TrainerPic: "aa"}
+	TrainerAdam := entity.Trainer{Name: "Adam", TrainerPic: "aa"}
 
-	hashedPassword1, err := HashPassword("admin")
-	if err != nil {
-		fmt.Printf("Error hashing password: %v\n", err)
-		return
-	}
+	db.FirstOrCreate(&TrainerJib, &entity.Trainer{Name: "Jib"})
+	db.FirstOrCreate(&TrainerAdam, &entity.Trainer{Name: "Adam"})
 
-	// Create member if not exists
-	member := &entity.Member{
-		Firstname:   "smile",
-		Lastname:    "member",
-		Email:       "member@gmail.com",
-		Username:    "member1",
-		Password:    hashedPassword,
-		GenderID:    1,
+	ClassTypeCardio := entity.ClassType{Name: "Cardio"}
+	ClassTypeCycling := entity.ClassType{Name: "Cycling"}
+
+	db.FirstOrCreate(&ClassTypeCardio, &entity.ClassType{Name: "Cardio"})
+	db.FirstOrCreate(&ClassTypeCycling, &entity.ClassType{Name: "Cycling"})
+
+
+	hashedPasswordAd, _ := HashPassword("123456")
+	Admin := entity.Admin{
+		Username: "Admin", 
+		Password: hashedPasswordAd, 
+		Email: "Admin@gmail.com", 
+		Firstname: "Thawan",
+		Lastname:  "Banda",
+		GenderID: 2,
+    }
+
+	hashedPassword, _ := HashPassword("789012")
+	Member := entity.Member{
+		Username: "smile", 
+		Password: hashedPassword, 
+		Email: "smile@gmail.com", 
+		Firstname: "Thawamhathai",
+		Lastname:  "Bandasak",
 		Phonenumber: "0655765586",
-		Age:         "20",
-	}
-	db.FirstOrCreate(member, entity.Member{Email: "member@gmail.com"})
+		GenderID: 2,
+    }
 
-	// Create admin if not exists
-	admin := &entity.Admin{
-		Firstname: "admin",
-		Lastname:  "smile",
-		Email:     "admin@gmail.com",
-		Username:  "admin1",
-		Password:  hashedPassword1,
-		GenderID:  1,
+	StartDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
+	EndDate, _ := time.Parse("2006-01-02 15:04:05", "2024-08-31 14:30:00")
+	Class := &entity.Class{
+		ClassName: "Hatha Yoga",
+		Deets:  "Introduction to yoga for strength & flexibility",
+		StartDate: StartDate,
+		EndDate:  EndDate,
+		TrainerID: 1,
+		ClassPic: "aa",
+		ParticNum: 30,
+		ClassTypeID: 1,
+		AdminID: 1,
 	}
-	db.FirstOrCreate(admin, entity.Admin{Email: "admin@gmail.com"})
 
+	Package := entity.Package{
+		PackageName:  "Daily",
+		Description:  "Members can access all services within the fitness center for a full day",
+		Price:     "59THB/d.",
+		Duration_days: "1 day" ,
+		
+	}
+
+
+	db.FirstOrCreate(&Admin, entity.Admin{Email: "PsAdmin@gmail.com"})
+	db.FirstOrCreate(&Member, entity.Member{Email: "Ps@gmail.com"})
+
+
+	db.FirstOrCreate(Class, &entity.Class{
+        ClassName: "Hatha Yoga",
+    })
+
+	db.FirstOrCreate(&Package, entity.Package{PackageName: "Daily_Membership"})
 
 	
 	

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MembersInterface } from "../../interface/IMembers"; // นำเข้า interface
 import { CreateMember } from "../../service/https/member";
 import toast, { Toaster } from "react-hot-toast"; // Import toast functions
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Stepper: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -18,6 +19,7 @@ const Stepper: React.FC = () => {
     });
 
     const steps = ["Personal Info", "Contact", "Account Info"];
+    const navigate = useNavigate();
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -50,7 +52,8 @@ const Stepper: React.FC = () => {
             console.log(res);
             if (res) {
                 toast.success("Successfully")
-                
+                setTimeout(function () {
+                    navigate("/Home");}, 2000);
                 // Reset form or navigate user
             } else if (res.errors) {
                 console.log('Errors:', res.errors);

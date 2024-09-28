@@ -32,6 +32,8 @@ func main() {
 		router.POST("/members", controller.CreateMember)
 		router.PATCH("/UpdateMember/:id", controller.UpdateMember)
 		router.DELETE("/members/:id", controller.DeleteMember)
+		router.GET("/members/count", controller.CountMembers)
+		router.POST("/members/subscribe", controller.CheckSubscription)
 
 		// Gender Routes
 		router.GET("/genders", controller.ListGenders)
@@ -42,6 +44,63 @@ func main() {
 		router.POST("/CreateAdmin", controller.CreateAdmin)
 		router.PATCH("/UpdateAdmin/:id", controller.UpdateAdmin)
 		router.DELETE("/admins/:id", controller.DeleteAdmin)
+
+
+		router.GET("/classes", controller.ListClasses)
+		router.GET("/class/:id", controller.GetClass)
+		router.POST("/classes", controller.CreateClass)
+		router.PATCH("/classes", controller.UpdateClass)
+		router.DELETE("/classes/:id", controller.DeleteClass)
+		router.GET("/classes/count", controller.CountClasses)
+		// ClassType Routes
+		router.GET("/classtypes", controller.ListClassTypes)
+		router.GET("/classtype/:id", controller.GetClassType)
+		router.POST("/classtypes", controller.CreateClassType)
+		router.PATCH("/classtypes", controller.UpdateClassType)
+		router.DELETE("/classtypes/:id", controller.DeleteClassType)
+
+		router.GET("/trainers", controller.ListTrainers)
+		router.GET("/trainer/:id", controller.GetTrainer)
+		router.POST("/trainers", controller.CreateTrainer)
+		router.PATCH("/trainers", controller.UpdateTrainer)
+		router.DELETE("/trainers/:id", controller.DeleteTrainer)
+
+		router.GET("/staffs/count", controller.CountStaffs)
+
+		// Booking Routes
+		router.GET("/bookings", controller.ListBookings)
+		router.GET("/booking/:id", controller.GetBooking)
+		router.POST("/bookings", controller.CreateBooking)
+		router.PATCH("/bookings", controller.UpdateBooking)
+		router.DELETE("/bookings/:id", controller.DeleteBooking)
+
+		// Package Routes
+		router.GET("/packages", controller.ListPackage)
+		router.GET("/package/:id", controller.GetPackage)
+		router.POST("/packages", controller.CreatePackage)
+		router.PATCH("/packages", controller.UpdatePackages)
+		router.DELETE("/packages/:id", controller.DeletePackage)
+
+		// Payment Routes
+		router.GET("/payments", controller.ListPayments)
+		router.GET("/payment/:id", controller.GetPayment)
+		router.POST("/payments", controller.CreatePayment)
+		router.PATCH("/payments", controller.UpdatePayment)
+		router.DELETE("/payments/:id", controller.DeletePayments)
+
+		// Promtpay Routes
+		router.GET("/promtpays", controller.ListPromptpays)
+		router.GET("/promtpay/:id", controller.GetPromptpay)
+		router.POST("/promtpays", controller.CreatePromtpay)
+		router.PATCH("/promtpays", controller.UpdatePromptpay)
+		router.DELETE("/promtpays/:id", controller.DeletePromptpay)
+
+		// CreditCard Routes
+		router.GET("/creditcards", controller.ListCreditCards)
+		router.GET("/creditcard/:id", controller.GetCreditCard)
+		router.POST("/creditcards", controller.CreateCreditCard)
+		router.PATCH("/creditcards", controller.UpdateCreditCard)
+		router.DELETE("/creditcards/:id", controller.DeleteCreditCard)
 	}
 
 	r.GET("/", func(c *gin.Context) {

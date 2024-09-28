@@ -28,23 +28,27 @@ func CreateMember(c *gin.Context) {
 		return
 	}	
 
+	// ตรวจสอบว่า username ซ้ำกันหรือไม่
+	var existingMember entity.Member
+	if err := db.Where("username = ?", member.Username).First(&existingMember).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "username already exists"})
+		return
+	}
+
 	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
 	hashedPassword, _ := config.HashPassword(member.Password)
 
 	// สร้าง Member
 	m := entity.Member{
-		Firstname: member.Firstname, // ตั้งค่าฟิลด์ FirstName
-		Lastname:  member.Lastname,  // ตั้งค่าฟิลด์ LastName
-		Email:     member.Email,     // ตั้งค่าฟิลด์ Email
+		Firstname: member.Firstname,
+		Lastname:  member.Lastname,
+		Email:     member.Email,
 		Password:  hashedPassword,
 		Username: member.Username,
 		Phonenumber: member.Phonenumber,
 		GenderID:  member.GenderID,
-		Gender:    genders, // โยงความสัมพันธ์กับ Entity Gender
+		Gender:    genders,
 		Age: member.Age,
-		TypeMember:member.TypeMember,
-		PaymentStatus:member.PaymentStatus,
-		SuspensionStatus:member.SuspensionStatus,
 	}
 
 	// บันทึก
@@ -55,6 +59,7 @@ func CreateMember(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Created success", "data": m})
 }
+
 
 // GET /member/:id
 func GetMember(c *gin.Context) {
@@ -159,4 +164,38 @@ func UpdateMember(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Updated successful"})
+}
+func CheckSubscription(c *gin.Context) {
+    var member entity.Member
+    var payment entity.Payment // Assuming you have a Payment struct in the entity package
+
+    MemberID := c.Param("id")
+
+    db := config.DB()
+
+    // First, check if the member exists
+    result := db.First(&member, MemberID)
+    if result.Error != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Member ID not found"})
+        return
+    }
+
+    // Check if there is a payment record for this member
+    paymentResult := db.Where("member_id = ?", MemberID).First(&payment)
+    if paymentResult.Error != nil {
+        c.JSON(http.StatusOK, gin.H{"message": "Not subscribed (No payment found)"})
+        return
+    }
+
+    // If a payment is found, assume the member is subscribed
+    c.JSON(http.StatusOK, gin.H{"message": "Subscribed"})
+}
+func CountMembers(c *gin.Context) {
+	var count int64
+	db := config.DB()
+	if err := db.Model(&entity.Member{}).Count(&count).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"count": count})
 }

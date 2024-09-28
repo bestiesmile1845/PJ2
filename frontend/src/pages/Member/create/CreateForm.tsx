@@ -10,8 +10,6 @@ const CreateForm: React.FC = () => {
         GenderID: undefined,
         Password: "",
         Age: "",
-        TypeMember: undefined,
-        Status: undefined,
     });
 
     const handleInputChange = (
@@ -160,36 +158,7 @@ const CreateForm: React.FC = () => {
                             />
                         </div>
 
-                        {/* Type Member */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Type Member</label>
-                            <select
-                                value={formData.TypeMember}
-                                onChange={(e) => handleInputChange(e, "TypeMember")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            >
-                                <option value="">none</option>
-                                <option value={1}>Basic</option>
-                                <option value={2}>Standard</option>
-                                <option value={2}>Premium</option>
-                            </select>
-                        </div>
-
-                        {/* Status */}
-                        <div>
-                            <label className="block text-green-300 mb-2">Status</label>
-                            <select
-                                value={formData.Status}
-                                onChange={(e) => handleInputChange(e, "Status")}
-                                className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
-                            >
-                                <option value="">none</option>
-                                <option value={1}>Active</option>
-                                <option value={2}>Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-
+                    </div>    
                     {/* Buttons */}
                     <div className="flex justify-end space-x-4 mt-8">
                         <button
