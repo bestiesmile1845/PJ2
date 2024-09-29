@@ -17,7 +17,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 const ClassCreate: React.FC = () => {
     const [className, setClassName] = useState<string>("");
-    const [selectedTrainer, setSelectedTrainer] = useState<number | undefined>(1);
     const [selectedType, setSelectedType] = useState<number | undefined>(1);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
@@ -30,7 +29,7 @@ const ClassCreate: React.FC = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
     const navigate = useNavigate();
-
+    const [selectedTrainer, setSelectedTrainer] = useState<number | undefined>(1);
     const fetchClassTypes = async () => {
         try {
             const res = await GetClassTypes();
@@ -49,6 +48,7 @@ const ClassCreate: React.FC = () => {
             const res = await GetTrainers();
             if (res) {
                 setTrainers(res);
+                setSelectedTrainer(res[0].ID);
             } else {
                 console.error("Failed to fetch trainers");
             }

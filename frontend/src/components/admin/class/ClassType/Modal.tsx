@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import toast from "react-hot-toast";
 import { ClassTypesInterface } from "../../../../interface/IClassType";
@@ -58,7 +58,7 @@ const Modal: React.FC<ModalProps> = ({
                 setName("");
                 onClose();
                 if (fetchClassTypes) {
-                    fetchClassTypes(); // Call fetchClassTypes if it is defined
+                    fetchClassTypes(); 
                 }
             } catch (error) {
                 console.error("Error creating class type:", error);
@@ -91,10 +91,10 @@ const Modal: React.FC<ModalProps> = ({
                 setName("");
                 onClose();
                 if (fetchClassTypes) {
-                    fetchClassTypes(); // Call fetchClassTypes if it is defined
+                    fetchClassTypes(); 
                 }
             } catch (error) {
-                console.error("Error update class type:", error);
+                console.error("Error updating class type:", error);
             }
         } else if (type === "delete" && onDelete) {
             try {
@@ -105,6 +105,11 @@ const Modal: React.FC<ModalProps> = ({
             }
         }
     };
+    useEffect(() => {
+        if (classType) {
+            setName(classType.Name || ""); // Provide a fallback empty string if classType.Name is undefined
+        }
+    }, [classType]);
 
     if (!isOpen) return null;
 

@@ -70,7 +70,6 @@ async function UpdateMember(id: number | undefined, data: MembersInterface) {
         Phonenumber: data.Phonenumber || "", // Assuming this field exists in data
         GenderID: data.GenderID,
         Password: "", // Keep Password empty for security reasons
-        Age: data.Age || "", // Assuming this field exists in data
         TypeMember: data.TypeMember || "", // Assuming this field exists in data
         PaymentStatus: data.PaymentStatus || "", // Assuming this field exists in data
         SuspensionStatus: data.SuspensionStatus || "", // Assuming this field exists in data

@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
                     const check = await CheckSubscription(result.id);
                     console.log(check);
                     if (check.message === "Subscribed") {
-                        setTimeout(() => navigate("/home"), 600); // Delay navigation
+                        setTimeout(() => navigate("/classBooking"), 600); // Delay navigation // Delay navigation
                     } else {
                         setTimeout(() => navigate("/package"), 600);
                     } // Delay navigation

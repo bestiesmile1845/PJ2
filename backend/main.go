@@ -80,6 +80,7 @@ func main() {
 		router.POST("/packages", controller.CreatePackage)
 		router.PATCH("/packages", controller.UpdatePackages)
 		router.DELETE("/packages/:id", controller.DeletePackage)
+		router.GET("/packages/count", controller.CountPackages)
 
 		// Payment Routes
 		router.GET("/payments", controller.ListPayments)
@@ -101,6 +102,19 @@ func main() {
 		router.POST("/creditcards", controller.CreateCreditCard)
 		router.PATCH("/creditcards", controller.UpdateCreditCard)
 		router.DELETE("/creditcards/:id", controller.DeleteCreditCard)
+
+		router.GET("/equipments", controller.ListEquipments)
+		router.GET("/equipment/:id", controller.GetEquipment)
+		router.POST("/equipments", controller.CreateEquipment)
+		router.PATCH("/equipments", controller.UpdateEquipment)
+		router.DELETE("/equipments/:id", controller.DeleteEquipment)
+		router.GET("/equipments/count", controller.CountEquipments)
+		// Bookingequip
+		router.GET("/bookingequipments", controller.ListEquipmentBookings)
+		router.GET("/bookingequipment/:id", controller.GetEquipmentBooking)
+		router.POST("/bookingequipments", controller.CreateEquipmentBooking)
+		router.PATCH("/bookingequipments", controller.UpdateEquipmentBooking)
+		router.DELETE("/bookingequipments/:id", controller.DeleteEquipmentBooking)
 	}
 
 	r.GET("/", func(c *gin.Context) {

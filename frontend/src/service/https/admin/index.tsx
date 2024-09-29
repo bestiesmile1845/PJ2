@@ -101,5 +101,14 @@ async function CheckSubscription(memberId: number | undefined) {
     // Change the endpoint to match your subscription check API
     return await fetchData(`${apiUrl}/members/${memberId}/subscribe`, requestOptions);
 }
+async function GetGenders() {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+    return await fetchData(`${apiUrl}/genders`, requestOptions);
+}
 
-export { CheckSubscription,GetAdmins, GetAdminById, CreateAdmin, UpdateAdminById, DeleteAdminByID };
+export { GetGenders,CheckSubscription,GetAdmins, GetAdminById, CreateAdmin, UpdateAdminById, DeleteAdminByID };

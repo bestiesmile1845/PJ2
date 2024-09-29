@@ -17,6 +17,6 @@ type Member struct {
 	Age              string
 	Gender           Genders `gorm:"foreignKey:GenderID"`
 	Bookings []Booking `gorm:"foreignKey:MemberID"`
-
+	BookingEquipments []BookingEquipment `gorm:"foreignKey:MemberID"`
 	Payments [] Payment `gorm:"foreignKey:MemberID "`
 }

@@ -37,6 +37,8 @@ func SetupDatabase() {
 		&entity.Payment{},
 		&entity.PromptPay{},
 		&entity.CreditCard{},
+		&entity.Equipment{},
+		&entity.BookingEquipment{},
 
 	)
 	GenderMale := entity.Genders{Gender: "Male"}
@@ -57,6 +59,11 @@ func SetupDatabase() {
 	db.FirstOrCreate(&ClassTypeCardio, &entity.ClassType{Name: "Cardio"})
 	db.FirstOrCreate(&ClassTypeCycling, &entity.ClassType{Name: "Cycling"})
 
+	EquipmentDumbbell := entity.Equipment{EquipmentName: "Dumbell", EquipmentPic: "xx"}
+	EquipmentJumprope := entity.Equipment{EquipmentName: "Jumprope", EquipmentPic: "oo"}
+
+	db.FirstOrCreate(&EquipmentDumbbell, &entity.Equipment{EquipmentName: "Dumbbell"})
+	db.FirstOrCreate(&EquipmentJumprope, &entity.Equipment{EquipmentName: "Jumprope"})
 
 	hashedPasswordAd, _ := HashPassword("123456")
 	Admin := entity.Admin{
@@ -76,6 +83,7 @@ func SetupDatabase() {
 		Firstname: "Thawamhathai",
 		Lastname:  "Bandasak",
 		Phonenumber: "0655765586",
+		Age: "15",
 		GenderID: 2,
     }
 
@@ -93,6 +101,14 @@ func SetupDatabase() {
 		AdminID: 1,
 	}
 
+
+	Equipment := &entity.Equipment{
+		EquipmentName: "Dumbbell",
+		Deets:  "Be strength with dumbbell",
+		StartDate: StartDate,
+		EndDate:  EndDate,
+		EquipmentPic: "xx",
+	}
 	Package := entity.Package{
 		PackageName:  "Daily",
 		Description:  "Members can access all services within the fitness center for a full day",
@@ -111,7 +127,9 @@ func SetupDatabase() {
     })
 
 	db.FirstOrCreate(&Package, entity.Package{PackageName: "Daily_Membership"})
-
+	db.FirstOrCreate(Equipment, &entity.Equipment{
+        EquipmentName: "Dumbbell",
+    })
 	
 	
 }

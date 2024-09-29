@@ -9,6 +9,6 @@ export interface MembersInterface {
     Password?: string;
     Age?: string;
     TypeMember?: string;
-	  PaymentStatus?: string;
-	  SuspensionStatus?: string;
+	PaymentStatus?: string;
+	SuspensionStatus?: string;
   }

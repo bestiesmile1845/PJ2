@@ -4,6 +4,6 @@ export interface AdminsInterface {
     Lastname?: string;
     Email?: string;
     Username?: string;
-    GenderID?: number;
+    GenderID?: number | undefined;
     Password?: string;
   }

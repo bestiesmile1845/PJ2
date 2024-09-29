@@ -81,13 +81,13 @@ const EditForm: React.FC = () => {
                                 toast.error("Please try again.");
                             }
                         }}
-                        className="bg-blue-600 text-white py-1 px-3 rounded"
+                        className="bg-hover text-white py-1 px-3 rounded"
                     >
                         Yes
                     </button>
                     <button
                         onClick={() => toast.dismiss(t.id)}
-                        className="bg-gray-600 text-red py-1 px-3 rounded"
+                        className="bg-gray-100 text-red py-1 px-3 rounded"
                     >
                         No
                     </button>

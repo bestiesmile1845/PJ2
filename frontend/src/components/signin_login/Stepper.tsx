@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { CreateMember, GetGenders } from "../../service/https/member";
-import { MembersInterface } from "../../interface/IMembers"; // Import MembersInterface
-import { GendersInterface } from "../../interface/IGender";
+
 import { useNavigate } from "react-router-dom";
+import { GendersInterface } from "../../interface/IGender";
+import { CreateMember, GetGenders } from "../../service/https/member";
+import { MembersInterface } from "../../interface/IMembers";
 
 const Stepper: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -11,28 +12,25 @@ const Stepper: React.FC = () => {
         FirstName: "",
         LastName: "",
         GenderID: "",
-        PhoneNumber: "",
         Email: "",
         Username: "",
         Password: "",
+        PhoneNumber: "",
     });
 
     const steps = ["Personal Info", "Contact", "Account Info"];
-
-    const [genders, setGenders] = useState<GendersInterface[]>([]); // State for gender data
+    const [genders, setGenders] = useState<GendersInterface[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch gender data when the component mounts
         const fetchGenders = async () => {
-            const genderData = await GetGenders(); // Call the API to get genders
+            const genderData = await GetGenders();
             if (genderData) {
-                setGenders(genderData); // Store gender data in state
+                setGenders(genderData);
             } else {
                 toast.error("Failed to fetch genders.");
             }
         };
-
         fetchGenders();
     }, []);
 
@@ -45,23 +43,26 @@ const Stepper: React.FC = () => {
     };
 
     const handleSubmit = async () => {
-        if (!formData.FirstName || !formData.LastName || !formData.Email || !formData.Password) {
+        if (!formData.FirstName || !formData.LastName || !formData.Email || !formData.Password || !formData.PhoneNumber) {
             toast.error("Please fill all required fields");
             return;
         }
 
         const memberData: MembersInterface = {
             ...formData,
-            GenderID: parseInt(formData.GenderID), // Convert string to number
+            GenderID: parseInt(formData.GenderID),
         };
 
         const response = await CreateMember(memberData);
 
         if (response) {
             toast.success("Member created successfully!");
-            navigate("/package");
+
+            setTimeout(() => {
+                navigate("/home");
+            }, 1000);
         } else {
-            toast.error("Failed to create member.");
+            toast.error("Username already exists.");
         }
     };
 
@@ -194,6 +195,7 @@ const Stepper: React.FC = () => {
 
     return (
         <div className="w-full max-w-md mx-auto ">
+            {/* Place Toaster at the root level */}
             <Toaster />
             <div className="flex justify-between mb-10">
                 {steps.map((step, index) => (

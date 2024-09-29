@@ -23,6 +23,11 @@ import PackageAd from "./pages/Admin/Packages";
 import Createpackage from "./pages/Admin/Packages/Create";
 import EditPackage from "./pages/Admin/Packages/Edit";
 import PaymentList from './pages/Admin/payment/list/PaymentList';
+import ClassBooking from './pages/User/class';
+import EquipmentCreate from './pages/Admin/Equipment/create';
+import EditEquipment from './pages/Admin/Equipment/Edit';
+import Equipment from './pages/Admin/Equipment';
+
 function App() {
   return (
     
@@ -49,7 +54,12 @@ function App() {
         <Route path="admin/package/create" element={<Createpackage />} />
         <Route path="/admin/package/edit/:id" element={<EditPackage />} />
         <Route path="/admin/payment" element={<PaymentList/>} />
+        <Route path="/classBooking" element={<ClassBooking />} />
 
+        <Route path="/equip" element={<Equipment />} />
+        <Route path="/equip/create" element={<EquipmentCreate />} />
+        <Route path="/equip/edit/:equipmentID" element={<EditEquipment />} />
+        
       </Routes>
   );
 }

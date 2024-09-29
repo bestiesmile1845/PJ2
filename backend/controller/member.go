@@ -31,7 +31,13 @@ func CreateMember(c *gin.Context) {
 	// ตรวจสอบว่า username ซ้ำกันหรือไม่
 	var existingMember entity.Member
 	if err := db.Where("username = ?", member.Username).First(&existingMember).Error; err == nil {
-		c.JSON(http.StatusConflict, gin.H{"error": "username already exists"})
+		c.JSON(http.StatusConflict, gin.H{"error": "username already exists in member"})
+		return
+	}
+	// ตรวจสอบว่า username ซ้ำกันหรือไม่ใน table Admin
+	var existingAdmin entity.Admin
+	if err := db.Where("username = ?", member.Username).First(&existingAdmin).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "Username already exists in Admin"})
 		return
 	}
 
